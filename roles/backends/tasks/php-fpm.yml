@@ -1,0 +1,38 @@
+---
+- name: Install PHP-FPM Debian
+  ansible.builtin.apt:
+    name:
+      - "php{{ php_version }}-fpm"
+      - "php{{ php_version }}-mysql"
+      - "php{{ php_version }}-bcmath"
+      - "php{{ php_version }}-ctype"
+      - "php{{ php_version }}-json"
+      - "php{{ php_version }}-mbstring"
+      - "php{{ php_version }}-pdo"
+      - "php{{ php_version }}-tokenizer"
+      - "php{{ php_version }}-xml"
+      - "php{{ php_version }}-curl"
+    state: latest
+    update_cache: yes
+
+- name: Start php-fpm service
+  ansible.builtin.service:
+    name: php{{ php_version }}-fpm
+    state: restarted
+    enabled: yes
+
+- name: Create html directory
+  ansible.builtin.file:
+    path: /var/www/html
+    state: directory
+    mode: '0755'
+
+- name: Copy adminer files
+  ansible.builtin.copy:
+    src: "templates/adminer/index.php"
+    dest: "/var/www/html/index.php"
+
+- name: Copy phpinfo files
+  ansible.builtin.copy:
+    src: "templates/adminer/phpinfo.php"
+    dest: "/var/www/html/phpinfo.php"

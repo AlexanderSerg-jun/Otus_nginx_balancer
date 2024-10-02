@@ -1,0 +1,12 @@
+---
+mysql_php_user: Data
+mysql_php_password: YourSuperPassword
+mysql_port: 3306
+
+create_app_db: true
+db_name: data
+db_collation: utf8_general_ci
+db_user: Maxim
+db_user_password: YourSuperPassword2
+db_host: "%"
+db_dump_file: "data.sql"
